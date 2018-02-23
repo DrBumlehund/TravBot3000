@@ -1,0 +1,107 @@
+{
+  "login": {
+    "username": "DenOndeNumse",
+    "password": "password",
+    "server_url": "https://ts19.travian.dk/"
+  },
+  "instructions": [
+    {
+      "village": "gøgl",
+      "location": "city",
+      "instructions": {
+        "Hovedbygning": 3,
+        "Råstoflager": 1,
+        "Kornkammer": 1,
+        "Markedsplads": 1
+      }
+    },
+    {
+      "village": "gøgl",
+      "location": "land",
+      "instructions": {
+        "Kornavler": 3,
+        "Skovhugger": 3,
+        "Jernmine": 3,
+        "Lergrav": 3
+      }
+    },
+    {
+      "village": "gøgl",
+      "location": "city",
+      "instructions": {
+        "Hovedbygning": 5,
+        "Råstoflager": 6,
+        "Kornkammer": 6
+      }
+    },
+    {
+      "village": "gøgl",
+      "location": "city",
+      "instructions": {
+        "Hovedbygning": 10,
+        "Kaserne": 1,
+        "Akademi": 1
+      }
+    },
+    {
+      "village": "gøgl",
+      "location": "city",
+      "instructions": {
+        "Råstoflager": 12,
+        "Kornkammer": 12,
+        "Akademi": 10,
+        "Rådhus": 1
+      }
+    },
+    {
+      "village": "gøgl",
+      "location": "land",
+      "instructions": {
+        "Kornavler": 6,
+        "Skovhugger": 6,
+        "Jernmine": 6,
+        "Lergrav": 6
+      }
+    },
+    {
+      "village": "gøgl",
+      "location": "city",
+      "instructions": {
+        "Råstoflager": 16,
+        "Kornkammer": 16,
+        "Hovedbygning": 15
+      }
+    },
+    {
+      "village": "gøgl",
+      "location": "land",
+      "instructions": {
+        "Kornavler": 10,
+        "Skovhugger": 10,
+        "Jernmine": 10,
+        "Lergrav": 10
+      }
+    },
+    {
+      "village": "gøgl",
+      "location": "city",
+      "instructions": {
+        "Råstoflager": 20,
+        "Kornkammer": 20,
+        "Hovedbygning": 20,
+        "Rådhus": 10,
+        "Markedsplads": 20,
+        "Smedje": 1,
+        "Stald": 1
+      }
+    },
+    {
+      "village": "gøgl",
+      "location": "city",
+      "instructions": {
+        "Stald": 10,
+        "Handelskontor": 20
+      }
+    }
+  ]
+}
