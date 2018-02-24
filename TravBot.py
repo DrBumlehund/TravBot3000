@@ -64,6 +64,9 @@ city_building_areas = {}
 
 def update_city_areas():
     global city_building_areas
+    if browser.current_url is not city_url:
+        browser.get(city_url)
+        random_sleep()
     city_building_areas = defaultdict(list)
     for i in browser.find_elements_by_tag_name("area"):
         if str(i.get_attribute('href')) == 'build.php?id=40':
@@ -82,7 +85,9 @@ def update_city_areas():
 
 
 def upgrade_area_until_level(instructions, name):
-    while instructions[name] - 1 >= city_building_areas[name][0]['level']:
+    update_city_areas()
+    random_sleep()
+    while instructions[name] - 1 > city_building_areas[name][0]['level']:
         update_city_areas()
         random_sleep()
         browser.get(city_building_areas[name][0]['href'])
@@ -131,8 +136,11 @@ def build_new_building_city(name):
 def handle_city(instructions):
     browser.get(city_url)
     random_sleep()
+    update_city_areas()
+    random_sleep()
     instructions = dict(instructions)
     for key in instructions.keys():
+        random_sleep()
         print("key: " + key + " value " + str(instructions[key]))
         if key not in city_building_areas.keys():
             build_new_building_city(key)
@@ -164,6 +172,9 @@ land_areas = defaultdict(list)
 
 def update_land_areas():
     global land_areas
+    if browser.current_url is not land_url:
+        browser.get(land_url)
+        random_sleep()
     land_areas = defaultdict(list)
     for i in browser.find_elements_by_tag_name('area'):
         if str(i.get_attribute('alt')) == 'Bygninger':
@@ -225,6 +236,8 @@ def upgrade_land(instructions):
 
 def handle_land(instructions):
     browser.get(land_url)
+    random_sleep()
+    update_land_areas()
     random_sleep()
     while not done_with_upgrading_land(instructions):
         upgrade_land(instructions)
