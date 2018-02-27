@@ -5,7 +5,6 @@ import re
 import time
 from collections import OrderedDict
 from collections import defaultdict
-
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
@@ -21,6 +20,7 @@ land_url = base_url + "dorf1.php"
 city_url = base_url + "dorf2.php"
 username = ins["login"]["username"]
 password = ins["login"]["password"]
+
 browser = webdriver.Edge()
 
 browser.get(land_url)
@@ -87,7 +87,7 @@ def update_city_areas():
 def upgrade_area_until_level(instructions, name):
     update_city_areas()
     random_sleep()
-    while instructions[name] - 1 > city_building_areas[name][0]['level']:
+    while city_building_areas[name][0]['level'] < instructions[name]:
         update_city_areas()
         random_sleep()
         browser.get(city_building_areas[name][0]['href'])
@@ -109,10 +109,12 @@ def upgrade_area_until_level(instructions, name):
         sleep_for_building_duration()
 
 
-def build_new_building_city(name):
+def build_new_building_city(name, i=1):
+    if i > 3:
+        return
     update_city_areas()
     random_sleep()
-    browser.get(city_building_areas['Byggeplads'][0]['href'])
+    browser.get(city_building_areas['Byggeplads'][0]['href'] + '&category=' + str(i))
     random_sleep()
     for k in browser.find_elements_by_class_name("buildingWrapper"):
         if str(k.find_element_by_tag_name("h2").text) == name:
@@ -131,6 +133,8 @@ def build_new_building_city(name):
             random_sleep()
             sleep_for_building_duration()
             return
+    # if no matches, go to next page
+    build_new_building_city(name, int(i) + 1)
 
 
 def handle_city(instructions):
@@ -187,7 +191,7 @@ def update_land_areas():
     print("updated land areas: " + str(land_areas))
 
 
-def done_with_upgrading_land(instructions):
+def done_upgrading_land(instructions):
     update_land_areas()
     random_sleep()
     done = []
@@ -239,12 +243,36 @@ def handle_land(instructions):
     random_sleep()
     update_land_areas()
     random_sleep()
-    while not done_with_upgrading_land(instructions):
+    while not done_upgrading_land(instructions):
         upgrade_land(instructions)
 
 
+villages = dict()
+
+
+def get_villages():
+    global villages
+    villages = dict()
+    for li in browser.find_element_by_id('sidebarBoxVillagelist').find_element_by_class_name(
+            'innerBox content').find_elements_by_tag_name('li'):
+        href = li.find_element_by_tag_name('a').get_attribute('href')
+        name = li.find_element_by_tag_name('a').find_element_by_class_name('name').text
+        villages[name] = href
+    print("Updating Villages: " + str(villages))
+
+
 def change_to_village(village_name):
+    global land_url, city_url
     print("changing to Village:" + str(village_name))
+    get_villages()
+    random_sleep()
+    if village_name in villages.keys():
+        browser.get(villages[village_name])
+        village_extension = str(villages[village_name]).split(".php")[1]  # to get second half of the url.
+        land_url = base_url + "dorf1.php" + village_extension
+        city_url = base_url + "dorf2.php" + village_extension
+    else:
+        print("unable to change to village named \"" + village_name + "\" ... we might be fucked IDK")
 
 
 for instruction in ins['instructions']:
@@ -254,3 +282,5 @@ for instruction in ins['instructions']:
         handle_city(instruction['instructions'])
     else:
         handle_land(instruction['instructions'])
+
+browser.quit()

@@ -38,8 +38,14 @@
       "village": "gøgl",
       "location": "city",
       "instructions": {
+        "Kaserne": 3
+      }
+    },
+    {
+      "village": "gøgl",
+      "location": "city",
+      "instructions": {
         "Hovedbygning": 10,
-        "Kaserne": 1,
         "Akademi": 1
       }
     },
